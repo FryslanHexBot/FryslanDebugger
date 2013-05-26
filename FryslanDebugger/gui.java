@@ -100,6 +100,8 @@ public class gui extends JFrame {
 			NPCID = Integer.parseInt(selnpc[0]);
 			Npc a = Npcs.get(NPCID);
 			if(a!= null && NPCID >0 ){
+					
+					FryslanDebuggerMain.TargetID = a.getLocation();
 				NPCTA.setText("Name : "+a.getName()+"\n"+
 						"ID : "+a.getId()+"\n"+
 						"Animation : "+a.getAnimation()+"\n"+
@@ -134,6 +136,8 @@ public class gui extends JFrame {
 				GOID = Integer.parseInt(selgo[0]);
 				GameObject a = GameObjects.getNearest(GOID);
 				if(a!= null && GOID >0 ){
+					
+					FryslanDebuggerMain.TargetID = a.getLocation();
 					SOTA.setText("Name : "+a.getName()+"\n"+
 							"ID : "+a.getId()+"\n"+
 							"Is onScreen : "+a.isOnScreen()+"\n"+
@@ -169,6 +173,8 @@ public class gui extends JFrame {
 				GIID = Integer.parseInt(selgi[0]);
 				GroundItem a = GroundItems.get(GIID);
 				if(a!= null && GIID >0 ){
+					
+					FryslanDebuggerMain.TargetID = a.getLocation();
 					GITA.setText("Name : "+a.getName()+"\n"+
 							"ID : "+a.getId()+"\n"+
 							"Is onScreen : "+a.isOnScreen()+"\n"+
@@ -200,6 +206,9 @@ public class gui extends JFrame {
 				PLID = selpl[0];
 				Player a = Players.getNearest(PLID);
 				if(a!= null){
+					
+					FryslanDebuggerMain.TargetID = a.getLocation(); 
+					
 					PLTA.setText("Name : "+a.getName()+"\n"+
 							"Animation : "+a.getAnimation()+"\n"+
 							"Prayer Icon : "+a.getPrayerIcon()+"\n"+
@@ -246,7 +255,9 @@ public class gui extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if(!txtPathName.getText().isEmpty() &&!txtPathName.getText().toString().contentEquals("Path Name")){
 					textArea.append("//This TilePath Is Created Using Fryslan Debugger.\n\nTile[] "+txtPathName.getText().toString()+" = new Tile[] { \nnew Tile"+Players.getLocal().getLocation()+" ,");
+					
 				}else{
+					
 					textArea.append("//This TilePath Is Created Using Fryslan Debugger.\n\nTile[] "+"HEXArea"+" = new Tile[] { \nnew Tile"+Players.getLocal().getLocation()+" ,");
 				}
 				
@@ -277,9 +288,10 @@ public class gui extends JFrame {
 		JButton btnStartArea = new JButton("Start Area");
 		btnStartArea.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(!txtAreaName.getText().isEmpty() &&txtAreaName.getText().toString()=="Area Name"){
+				if(!txtAreaName.getText().isEmpty() &&txtAreaName.getText().toString().contentEquals("Area Name")){
 					textArea.append("//This Area Is Created Using Fryslan Debugger.\n\nArea "+txtAreaName.getText().toString()+" = new Area(new Tile[] { \nnew Tile"+Players.getLocal().getLocation()+" ,");
-					}else{
+					
+				}else{
 						textArea.append("//This Area Is Created Using Fryslan Debugger.\n\nArea "+"HEXArea"+" = new Area(new Tile[] { \nnew Tile"+Players.getLocal().getLocation()+" ,");
 					}
 			}
@@ -326,9 +338,11 @@ public class gui extends JFrame {
 				Npc[] allNPC = Npcs.getLoaded();
 				for(Npc n : allNPC){
 					if(n != null && !n.getName().toLowerCase().contains("null") && textField.getText().toString().isEmpty()){
+						
+						
 						NPCList.add(n.getId()+" "+n.getName());
 					}else if(!textField.getText().toString().isEmpty()){
-						if(n != null && !n.getName().toLowerCase().contains("null") && textField.getText().toString().toLowerCase().contains(n.getName().toLowerCase())){
+						if(n != null && !n.getName().toLowerCase().contains("null") && n.getName().toLowerCase().contains(textField.getText().toString().toLowerCase())){
 							NPCList.add(n.getId()+" "+n.getName());
 						}
 					}
@@ -339,7 +353,7 @@ public class gui extends JFrame {
 					if(g != null && !g.getName().toLowerCase().contains("null") && textField.getText().toString().isEmpty() ){
 						GOList.add(g.getId()+" "+g.getName());
 					}else if(!textField.getText().toString().isEmpty()){
-						if(g != null && !g.getName().toLowerCase().contains("null") && textField.getText().toString().toLowerCase().contains(g.getName().toLowerCase())){
+						if(g != null && !g.getName().toLowerCase().contains("null") && g.getName().toLowerCase().contains(textField.getText().toString().toLowerCase())){
 							GOList.add(g.getId()+" "+g.getName());
 						}
 					}
@@ -350,7 +364,7 @@ public class gui extends JFrame {
 					if(p != null && !p.getName().toLowerCase().contains("null") && textField.getText().toString().isEmpty()){
 						PLList.add(p.getName()+" ");
 					}else if(!textField.getText().toString().isEmpty()){
-						if(p != null && !p.getName().toLowerCase().contains("null") && textField.getText().toString().toLowerCase().contains(p.getName().toLowerCase())){
+						if(p != null && !p.getName().toLowerCase().contains("null") && p.getName().toLowerCase().contains(textField.getText().toString().toLowerCase())){
 							PLList.add(p.getName()+" ");
 						}
 					}
@@ -361,7 +375,7 @@ public class gui extends JFrame {
 					if(gi != null && gi.getDefinition() != null && !gi.getDefinition().getName().toLowerCase().contains("null") && textField.getText().toString().isEmpty()){
 						GIList.add(gi.getId()+" "+gi.getDefinition().getName());
 					}else if(!textField.getText().toString().isEmpty()){
-						if(gi != null && !gi.getName().toLowerCase().contains("null") && textField.getText().toString().toLowerCase().contains(gi.getName().toLowerCase())){
+						if(gi != null && !gi.getName().toLowerCase().contains("null") && gi.getName().toLowerCase().contains(textField.getText().toString().toLowerCase())){
 							GIList.add(gi.getId()+" "+gi.getDefinition().getName());
 						}
 					}

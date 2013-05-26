@@ -34,7 +34,17 @@ import org.hexbot.script.Script;
 
 @Manifest(author = "Fryslan", name = "Fryslan Debugger", description = "Ultimate Dev Tool", version = 1.1)
 public class FryslanDebuggerMain extends Script implements Paintable {
-
+	
+	public static Tile TargetID;
+	static Area TileArea1; 
+	public static Tile[] TileArea;
+	
+	public static boolean isPlayer;
+	public static boolean isGameObject;
+	public static boolean isGroundItem;
+	public static boolean isNPC;
+	
+	
 
 	@Override
 	public int loop() {
@@ -64,8 +74,14 @@ public class FryslanDebuggerMain extends Script implements Paintable {
 	}
 	
 	@Override
-	public void paint(Graphics arg0) {
-		// TODO Auto-generated method stub
+	public void paint(Graphics g) {
+		
+		Tile myTile = TargetID; 
+		if(myTile != null){
+		g.fillPolygon(myTile.getBounds().xpoints,myTile.getBounds().ypoints,myTile.getBounds().npoints);
+		g.drawLine(Players.getLocal().getLocation().getScreenLocation().x, Players.getLocal().getLocation().getScreenLocation().y, TargetID.getScreenLocation().x,TargetID.getScreenLocation().y);
+	}
+		
 		
 	}
 		
