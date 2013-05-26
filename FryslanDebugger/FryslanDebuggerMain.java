@@ -32,7 +32,7 @@ import org.hexbot.api.wrapper.Tile;
 import org.hexbot.script.Manifest;
 import org.hexbot.script.Script;
 
-@Manifest(author = "Fryslan", name = "Fryslan Debugger", description = "Ultimate Dev Tool", version = 0.1)
+@Manifest(author = "Fryslan", name = "Fryslan Debugger", description = "Ultimate Dev Tool", version = 1.1)
 public class FryslanDebuggerMain extends Script implements Paintable {
 
 
