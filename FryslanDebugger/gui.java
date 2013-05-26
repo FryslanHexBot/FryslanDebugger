@@ -41,6 +41,7 @@ public class gui extends JFrame {
 	String PLID;
 	private JTextField txtAreaName;
 	private JTextField txtPathName;
+	private JTextField textField;
 
 	/**
 	 * Launch the application.
@@ -69,7 +70,7 @@ public class gui extends JFrame {
 	
 	public gui() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 450, 370);
+		setBounds(100, 100, 450, 395);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -82,6 +83,11 @@ public class gui extends JFrame {
 		Panel panel = new Panel();
 		tabbedPane.addTab("NPCs", null, panel, null);
 		panel.setLayout(null);
+		
+		textField = new JTextField();
+		textField.setBounds(48, 306, 175, 20);
+		contentPane.add(textField);
+		textField.setColumns(10);
 		
 		final TextArea NPCTA = new TextArea();
 		NPCTA.setBounds(172, 10, 247, 246);
@@ -271,7 +277,7 @@ public class gui extends JFrame {
 		JButton btnStartArea = new JButton("Start Area");
 		btnStartArea.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(!txtAreaName.getText().isEmpty() &&txtAreaName.getText().toString().contentEquals("Area Name")){
+				if(!txtAreaName.getText().isEmpty() &&txtAreaName.getText().toString()=="Area Name"){
 					textArea.append("//This Area Is Created Using Fryslan Debugger.\n\nArea "+txtAreaName.getText().toString()+" = new Area(new Tile[] { \nnew Tile"+Players.getLocal().getLocation()+" ,");
 					}else{
 						textArea.append("//This Area Is Created Using Fryslan Debugger.\n\nArea "+"HEXArea"+" = new Area(new Tile[] { \nnew Tile"+Players.getLocal().getLocation()+" ,");
@@ -309,16 +315,7 @@ public class gui extends JFrame {
 		lblPathCreater.setBounds(320, 10, 89, 14);
 		panel_3.add(lblPathCreater);
 		
-		JButton btnClear = new JButton("Clear All");
-		btnClear.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				textArea.setText(" ");
-			}
-		});
-		btnClear.setBounds(321, 242, 89, 23);
-		panel_3.add(btnClear);
-		
-		Button button = new Button("Load Data");
+		JButton button = new JButton("Load Data");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				NPCList.removeAll();
@@ -328,45 +325,82 @@ public class gui extends JFrame {
 				
 				Npc[] allNPC = Npcs.getLoaded();
 				for(Npc n : allNPC){
-					if(n != null && !n.getName().toLowerCase().contains("null")){
+					if(n != null && !n.getName().toLowerCase().contains("null") && textField.getText().toString().isEmpty()){
 						NPCList.add(n.getId()+" "+n.getName());
+					}else if(!textField.getText().toString().isEmpty()){
+						if(n != null && !n.getName().toLowerCase().contains("null") && textField.getText().toString().toLowerCase().contains(n.getName().toLowerCase())){
+							NPCList.add(n.getId()+" "+n.getName());
+						}
 					}
 				}
 				
 				java.util.List<GameObject> allGO = GameObjects.getLoaded();
 				for(GameObject g : allGO){
-					if(g != null && !g.getName().toLowerCase().contains("null") ){
+					if(g != null && !g.getName().toLowerCase().contains("null") && textField.getText().toString().isEmpty() ){
 						GOList.add(g.getId()+" "+g.getName());
-					}
-				}
-				
-				GroundItem[] allGI = GroundItems.getAll();
-				for(GroundItem gi : allGI){
-					if(gi != null && !gi.toString().isEmpty() && !gi.getName().toLowerCase().contains("null") && gi.getId() > 0){
-						GIList.add(gi.getId()+" "+gi.getName());
+					}else if(!textField.getText().toString().isEmpty()){
+						if(g != null && !g.getName().toLowerCase().contains("null") && textField.getText().toString().toLowerCase().contains(g.getName().toLowerCase())){
+							GOList.add(g.getId()+" "+g.getName());
+						}
 					}
 				}
 				
 				Player[] allPL = Players.getLoaded();
 				for(Player p : allPL){
-					if(p != null && !p.getName().toLowerCase().contains("null")){
+					if(p != null && !p.getName().toLowerCase().contains("null") && textField.getText().toString().isEmpty()){
 						PLList.add(p.getName()+" ");
+					}else if(!textField.getText().toString().isEmpty()){
+						if(p != null && !p.getName().toLowerCase().contains("null") && textField.getText().toString().toLowerCase().contains(p.getName().toLowerCase())){
+							PLList.add(p.getName()+" ");
+						}
 					}
 				}
+				
+				/*GroundItem[] allGI = GroundItems.getAll();
+				for(GroundItem gi : allGI){
+					if(gi != null && gi.getDefinition() != null && !gi.getDefinition().getName().toLowerCase().contains("null") && textField.getText().toString().isEmpty()){
+						GIList.add(gi.getId()+" "+gi.getDefinition().getName());
+					}else if(!textField.getText().toString().isEmpty()){
+						if(gi != null && !gi.getName().toLowerCase().contains("null") && textField.getText().toString().toLowerCase().contains(gi.getName().toLowerCase())){
+							GIList.add(gi.getId()+" "+gi.getDefinition().getName());
+						}
+					}
+				}*/
+				
+				
 				
 				
 			}
 		});
-		button.setBounds(5, 305, 213, 22);
+		button.setBounds(10, 332, 213, 22);
 		contentPane.add(button);
 		
-		Button button_1 = new Button("Close");
+		JButton button_1 = new JButton("Close");
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 			}
 		});
-		button_1.setBounds(211, 305, 213, 22);
+		button_1.setBounds(229, 332, 200, 22);
 		contentPane.add(button_1);
+		
+		
+		
+		JLabel lblSearch = new JLabel("Search");
+		lblSearch.setBounds(10, 309, 46, 14);
+		contentPane.add(lblSearch);
+		
+		JButton btnClear = new JButton("Clear All");
+		btnClear.setBounds(229, 305, 200, 23);
+		contentPane.add(btnClear);
+		btnClear.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textArea.setText(" ");
+				NPCList.removeAll();
+				GOList.removeAll();
+				GIList.removeAll();
+				PLList.removeAll();
+			}
+		});
 	}
 }
