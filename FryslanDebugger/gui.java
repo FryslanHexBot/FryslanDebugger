@@ -1,6 +1,5 @@
 package FryslanDebugger;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -12,18 +11,14 @@ import org.hexbot.api.methods.GameObjects;
 import org.hexbot.api.methods.GroundItems;
 import org.hexbot.api.methods.Npcs;
 import org.hexbot.api.methods.Players;
-import org.hexbot.api.wrapper.Area;
 import org.hexbot.api.wrapper.GameObject;
 import org.hexbot.api.wrapper.GroundItem;
 import org.hexbot.api.wrapper.Npc;
 import org.hexbot.api.wrapper.Player;
-import org.hexbot.api.wrapper.Tile;
-import org.hexbot.script.Script;
 
 import java.awt.TextArea;
 import java.awt.Panel;
 import java.awt.List;
-import java.awt.Button;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.UIManager;
@@ -32,7 +27,7 @@ import javax.swing.JTextField;
 import javax.swing.JSeparator;
 import javax.swing.JLabel;
 
-public class gui extends JFrame {
+public class GUI extends JFrame {
 
 	private JPanel contentPane;
 	int NPCID;
@@ -55,7 +50,7 @@ public class gui extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					gui frame = new gui();
+					GUI frame = new GUI();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -68,7 +63,7 @@ public class gui extends JFrame {
 	 * Create the frame.
 	 */
 	
-	public gui() {
+	public GUI() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 395);
 		contentPane = new JPanel();
