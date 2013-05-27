@@ -1,7 +1,5 @@
 package FryslanDebugger;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -20,7 +18,6 @@ import java.awt.Panel;
 import java.awt.List;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.UIManager;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JSeparator;
@@ -36,31 +33,6 @@ public class GUI extends JFrame {
 	private JTextField txtAreaName;
 	private JTextField txtPathName;
 	private JTextField textField;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-		} catch (Throwable e) {
-			e.printStackTrace();
-		}
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					GUI frame = new GUI();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
 	
 	public GUI() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
