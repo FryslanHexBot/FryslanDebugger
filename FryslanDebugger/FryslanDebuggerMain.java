@@ -13,15 +13,6 @@ import org.hexbot.script.Script;
 public class FryslanDebuggerMain extends Script implements Paintable {
 	
 	public static Tile TargetID;
-	static Area TileArea1; 
-	public static Tile[] TileArea;
-	
-	public static boolean isPlayer;
-	public static boolean isGameObject;
-	public static boolean isGroundItem;
-	public static boolean isNPC;
-	
-	
 
 	@Override
 	public int loop() {
