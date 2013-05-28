@@ -35,6 +35,7 @@ public class GUI extends JFrame {
 	private JTextField textField;
 	
 	public GUI() {
+		setTitle("Fryslan Debugger");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 395);
 		contentPane = new JPanel();
