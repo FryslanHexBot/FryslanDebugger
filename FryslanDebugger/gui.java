@@ -7,12 +7,15 @@ import javax.swing.JTabbedPane;
 
 import org.hexbot.api.methods.GameObjects;
 import org.hexbot.api.methods.GroundItems;
+import org.hexbot.api.methods.Inventory;
 import org.hexbot.api.methods.Npcs;
 import org.hexbot.api.methods.Players;
 import org.hexbot.api.wrapper.GameObject;
 import org.hexbot.api.wrapper.GroundItem;
+import org.hexbot.api.wrapper.Item;
 import org.hexbot.api.wrapper.Npc;
 import org.hexbot.api.wrapper.Player;
+
 import java.awt.TextArea;
 import java.awt.Panel;
 import java.awt.List;
@@ -22,18 +25,25 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JSeparator;
 import javax.swing.JLabel;
+import javax.swing.JCheckBox;
+import java.awt.Font;
 
 public class GUI extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -784851261083480352L;
 	private JPanel contentPane;
 	int NPCID;
 	int GOID;
 	int GIID;
 	String PLID;
+	int INVID;
 	private JTextField txtAreaName;
 	private JTextField txtPathName;
 	private JTextField textField;
-	
+	String[] SaveNPC;
 	public GUI() {
 		setTitle("Fryslan Debugger");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -72,6 +82,9 @@ public class GUI extends JFrame {
 				NPCTA.setText("Name : "+a.getName()+"\n"+
 						"ID : "+a.getId()+"\n"+
 						"Animation : "+a.getAnimation()+"\n"+
+						"HP : "+a.getHp()+"\n"+
+						/*"Max HP : "+a.getMaxHp()+"\n"+
+						"HP Percent : "+a.getHpPercent()+"\n"+*/
 						"Is onScreen : "+a.isOnScreen()+"\n"+
 						"Location : "+a.getLocation()+"\n"+
 						"Distance To : "+a.getDistanceTo(Players.getLocal().getLocation())+"\n"+
@@ -118,10 +131,6 @@ public class GUI extends JFrame {
 		GOList.setBounds(10, 10, 156, 246);
 		panel_1.add(GOList);
 		
-		
-		
-		
-		
 		Panel GItems = new Panel();
 		tabbedPane.addTab("GroundItems", null, GItems, null);
 		GItems.setLayout(null);
@@ -162,6 +171,10 @@ public class GUI extends JFrame {
 		tabbedPane.addTab("Players", null, panel_2, null);
 		panel_2.setLayout(null);
 		
+		JPanel panel_4 = new JPanel();
+		tabbedPane.addTab("Inventory", null, panel_4, null);
+		panel_4.setLayout(null);
+		
 		final TextArea PLTA = new TextArea();
 		PLTA.setBounds(172, 10, 247, 246);
 		panel_2.add(PLTA);
@@ -192,6 +205,36 @@ public class GUI extends JFrame {
 		});
 		PLList.setBounds(10, 10, 156, 246);
 		panel_2.add(PLList);
+		
+		final TextArea INVTA = new TextArea();
+		INVTA.setBounds(172, 10, 247, 246);
+		panel_4.add(INVTA);
+		
+		
+		final List INVList = new List();
+		INVList.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+
+				String[] selinv = INVList.getSelectedItem().toString().split(" ");
+				INVID = Integer.parseInt(selinv[0]);
+				Item a = Inventory.getItem(INVID);
+				if(a!= null && INVID >0 ){
+					
+					INVTA.setText("Name : "+a.getName()+"\n"+
+							"ID : "+a.getId()+"\n"+
+							"StackSize : "+a.getStackSize());
+					
+				}else{
+					INVTA.setText(" ");
+				}
+				
+				
+			}
+		});
+		INVList.setBounds(10, 10, 156, 246);
+		panel_4.add(INVList);
+		
+		
 		
 		JPanel panel_3 = new JPanel();
 		tabbedPane.addTab("Path/Area Creator", null, panel_3, null);
@@ -294,6 +337,49 @@ public class GUI extends JFrame {
 		lblPathCreater.setBounds(320, 10, 89, 14);
 		panel_3.add(lblPathCreater);
 		
+		JPanel panel_5 = new JPanel();
+		tabbedPane.addTab("Options", null, panel_5, null);
+		panel_5.setLayout(null);
+		
+		final JCheckBox CKNPC = new JCheckBox("NPCs");
+		CKNPC.setBounds(10, 29, 97, 23);
+		panel_5.add(CKNPC);
+		
+		JLabel lblDataToLoad = new JLabel("Data To Load : ");
+		lblDataToLoad.setFont(new Font("Tahoma", Font.ITALIC, 12));
+		lblDataToLoad.setBounds(10, 11, 409, 14);
+		panel_5.add(lblDataToLoad);
+		
+		final JCheckBox CKGO = new JCheckBox("GameObjects");
+		CKGO.setBounds(151, 29, 97, 23);
+		panel_5.add(CKGO);
+		
+		final JCheckBox CKGI = new JCheckBox("GroundItems");
+		CKGI.setBounds(151, 55, 97, 23);
+		panel_5.add(CKGI);
+		
+		final JCheckBox CKINV = new JCheckBox("Inventory");
+		CKINV.setBounds(298, 29, 97, 23);
+		panel_5.add(CKINV);
+		
+		final JCheckBox CKPL = new JCheckBox("Players");
+		CKPL.setBounds(10, 55, 97, 23);
+		panel_5.add(CKPL);
+		
+		JSeparator separator_2 = new JSeparator();
+		separator_2.setBounds(0, 100, 419, 2);
+		panel_5.add(separator_2);
+		
+		JLabel lblOnlyCheckThe = new JLabel("Only Check The Nessercary Data To Load For TheBest Result.");
+		lblOnlyCheckThe.setBounds(13, 81, 399, 14);
+		panel_5.add(lblOnlyCheckThe);
+		
+		
+		JLabel lblSaveData = new JLabel("Save Data : ");
+		lblSaveData.setFont(new Font("Tahoma", Font.ITALIC, 13));
+		lblSaveData.setBounds(10, 105, 140, 14);
+		panel_5.add(lblSaveData);
+		
 		JButton button = new JButton("Load Data");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -303,19 +389,20 @@ public class GUI extends JFrame {
 				PLList.removeAll();
 				
 				Npc[] allNPC = Npcs.getLoaded();
+				if(CKNPC.isSelected() == true ){
 				for(Npc n : allNPC){
 					if(n != null && !n.getName().toLowerCase().contains("null") && textField.getText().toString().isEmpty()){
-						
-						
 						NPCList.add(n.getId()+" "+n.getName());
 					}else if(!textField.getText().toString().isEmpty()){
 						if(n != null && !n.getName().toLowerCase().contains("null") && n.getName().toLowerCase().contains(textField.getText().toString().toLowerCase())){
 							NPCList.add(n.getId()+" "+n.getName());
 						}
 					}
+					}
 				}
 				
 				java.util.List<GameObject> allGO = GameObjects.getLoaded();
+				if(CKGO.isSelected()  == true){
 				for(GameObject g : allGO){
 					if(g != null && !g.getName().toLowerCase().contains("null") && textField.getText().toString().isEmpty() ){
 						GOList.add(g.getId()+" "+g.getName());
@@ -325,8 +412,10 @@ public class GUI extends JFrame {
 						}
 					}
 				}
+				}
 				
 				Player[] allPL = Players.getLoaded();
+				if(CKPL.isSelected()  == true){
 				for(Player p : allPL){
 					if(p != null && !p.getName().toLowerCase().contains("null") && textField.getText().toString().isEmpty()){
 						PLList.add(p.getName()+" ");
@@ -335,9 +424,11 @@ public class GUI extends JFrame {
 							PLList.add(p.getName()+" ");
 						}
 					}
+					}
 				}
 				
 				GroundItem[] allGI = GroundItems.getAll();
+				if(CKGI.isEnabled()  == true){
 				for(GroundItem gi : allGI){
 					if(gi != null && gi.getDefinition() != null && !gi.getDefinition().getName().toLowerCase().contains("null") && textField.getText().toString().isEmpty()){
 						GIList.add(gi.getId()+" "+gi.getDefinition().getName());
@@ -346,6 +437,20 @@ public class GUI extends JFrame {
 							GIList.add(gi.getId()+" "+gi.getDefinition().getName());
 						}
 					}
+				}
+				}
+				
+				Item[] allII = Inventory.getAll();
+				if(CKINV.isSelected()  == true){
+				for(Item ii : allII){
+					if(ii != null && ii.getDefinition() != null && !ii.getDefinition().getName().toLowerCase().contains("null") && textField.getText().toString().isEmpty()){
+						INVList.add(ii.getId()+" "+ii.getDefinition().getName());
+					}else if(!textField.getText().toString().isEmpty()){
+						if( ii != null && !ii.getName().toLowerCase().contains("null") && ii.getName().toLowerCase().contains(textField.getText().toString().toLowerCase())){
+							INVList.add(ii.getId()+" "+ii.getDefinition().getName());
+						}
+					}
+				}
 				}
 				
 				
@@ -381,6 +486,7 @@ public class GUI extends JFrame {
 				GOList.removeAll();
 				GIList.removeAll();
 				PLList.removeAll();
+				INVList.removeAll();
 			}
 		});
 	}

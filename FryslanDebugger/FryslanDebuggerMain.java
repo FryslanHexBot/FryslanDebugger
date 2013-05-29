@@ -4,7 +4,6 @@ import java.awt.EventQueue;
 import java.awt.Graphics;
 import org.hexbot.api.listeners.Paintable;
 import org.hexbot.api.methods.Players;
-import org.hexbot.api.wrapper.Area;
 import org.hexbot.api.wrapper.Tile;
 import org.hexbot.script.Manifest;
 import org.hexbot.script.Script;
