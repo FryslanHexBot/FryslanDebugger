@@ -83,8 +83,9 @@ public class GUI extends JFrame {
 						"ID : "+a.getId()+"\n"+
 						"Animation : "+a.getAnimation()+"\n"+
 						"HP : "+a.getHp()+"\n"+
-						/*"Max HP : "+a.getMaxHp()+"\n"+
-						"HP Percent : "+a.getHpPercent()+"\n"+*/
+						"Max HP : "+a.getMaxHp()+"\n"+
+						"HP Percent : "+a.getHpPercent()+"\n"+
+						"Combat Level : "+a.getLevel()+"\n"+
 						"Is onScreen : "+a.isOnScreen()+"\n"+
 						"Location : "+a.getLocation()+"\n"+
 						"Distance To : "+a.getDistanceTo(Players.getLocal().getLocation())+"\n"+
@@ -191,6 +192,9 @@ public class GUI extends JFrame {
 					
 					PLTA.setText("Name : "+a.getName()+"\n"+
 							"Animation : "+a.getAnimation()+"\n"+
+							"HP : "+a.getHp()+"\n"+
+							"Max HP : "+a.getMaxHp()+"\n"+
+							"HP Percent : "+a.getHpPercent()+"\n"+
 							"Prayer Icon : "+a.getPrayerIcon()+"\n"+
 							"Skull Icon : "+a.getSkullIcon()+"\n"+
 							"Is onScreen : "+a.isOnScreen()+"\n"+
@@ -370,15 +374,11 @@ public class GUI extends JFrame {
 		separator_2.setBounds(0, 100, 419, 2);
 		panel_5.add(separator_2);
 		
-		JLabel lblOnlyCheckThe = new JLabel("Only Check The Nessercary Data To Load For TheBest Result.");
+		JLabel lblOnlyCheckThe = new JLabel("Only Check The Necessary Data To Load For The Best Result.");
 		lblOnlyCheckThe.setBounds(13, 81, 399, 14);
 		panel_5.add(lblOnlyCheckThe);
 		
 		
-		JLabel lblSaveData = new JLabel("Save Data : ");
-		lblSaveData.setFont(new Font("Tahoma", Font.ITALIC, 13));
-		lblSaveData.setBounds(10, 105, 140, 14);
-		panel_5.add(lblSaveData);
 		
 		JButton button = new JButton("Load Data");
 		button.addActionListener(new ActionListener() {
