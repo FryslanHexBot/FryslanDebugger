@@ -1,21 +1,28 @@
 package FryslanDebugger;
 
+import java.applet.Applet;
 import java.awt.EventQueue;
 import java.awt.Graphics;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import org.hexbot.api.listeners.Paintable;
 import org.hexbot.api.methods.Players;
 import org.hexbot.api.wrapper.Tile;
 import org.hexbot.script.Manifest;
 import org.hexbot.script.Script;
+import org.hexbot.bot.Bot;
+import org.hexbot.bot.event.debug.GameDebug;
 
-@Manifest(author = "Fryslan", name = "Fryslan Debugger", description = "Ultimate Dev Tool", version = 1.1)
+@Manifest(author = "Fryslan", name = "Fryslan Debugger", description = "Ultimate Dev Tool", version = 1.2)
 public class FryslanDebuggerMain extends Script implements Paintable {
 	
 	public static Tile TargetID;
 
 	@Override
 	public int loop() {
-		// TODO Auto-generated method stub
+		
+	
 		return 0;
 	}
 
