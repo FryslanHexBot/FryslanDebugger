@@ -5,17 +5,18 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTabbedPane;
 
+import org.hexbot.api.methods.Game;
 import org.hexbot.api.methods.GameObjects;
 import org.hexbot.api.methods.GroundItems;
 import org.hexbot.api.methods.Inventory;
 import org.hexbot.api.methods.Npcs;
 import org.hexbot.api.methods.Players;
+import org.hexbot.api.methods.Settings;
 import org.hexbot.api.wrapper.GameObject;
 import org.hexbot.api.wrapper.GroundItem;
 import org.hexbot.api.wrapper.Item;
 import org.hexbot.api.wrapper.Npc;
 import org.hexbot.api.wrapper.Player;
-
 import java.awt.TextArea;
 import java.awt.Panel;
 import java.awt.List;
@@ -27,6 +28,7 @@ import javax.swing.JSeparator;
 import javax.swing.JLabel;
 import javax.swing.JCheckBox;
 import java.awt.Font;
+import java.util.Date;
 
 public class GUI extends JFrame {
 
@@ -44,8 +46,17 @@ public class GUI extends JFrame {
 	private JTextField txtPathName;
 	private JTextField textField;
 	public String[] SaveNPC;
+	
+	
+	
+	
+	
+	
+	public static int[] oldSettings;
+	public static int[] newSettings;
 
 	public GUI() {
+		setAlwaysOnTop(true);
 		//GUI Settings
 		setTitle("Fryslan Debugger");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -97,7 +108,84 @@ public class GUI extends JFrame {
 																						"Only Check The Necessary Data To Load For The Best Result.");
 																				lblOnlyCheckThe.setBounds(13, 81, 399, 14);
 																				panel_5.add(lblOnlyCheckThe);
+		
+		Panel panel = new Panel();
+		tabbedPane.addTab("Settings Explorer", null, panel, null);
+		panel.setLayout(null);
+		
+		final TextArea SettingsArea = new TextArea();
+		SettingsArea.setBounds(141, 10, 278, 228);
+		panel.add(SettingsArea);
+		
+		final List SettingsList = new List();
+		SettingsList.setBounds(0, 10, 135, 257);
+		panel.add(SettingsList);
+		for(int i = 0;i < Settings.getAll().length;i++){
+			long a = Settings.get(i);
+		SettingsList.add("Setting "+i+ " : "+a);
+		SettingsList.repaint();
+		}
+		
+		
+		JButton btnNewButton = new JButton("Reload");
+		btnNewButton.addActionListener(new ActionListener() {
+			@SuppressWarnings("deprecation")
+			public void actionPerformed(ActionEvent arg0) {
+				try{
+					Date myDate=new Date(); 
+					
+					
+					
+				if(SettingsList.getItemCount() == 0){
+					for(int i = 0;i < Settings.getAll().length;i++){
+						long a = Settings.get(i);
+					SettingsList.add("Setting "+i+ " : "+a);
+						
+					}
+				}else if(SettingsList.getItemCount() > 0){
+				
+				for(int h = 0; h < SettingsList.getItemCount();h++){
+				if(SettingsList.getItem(h) != null){
+					
+					int i = Integer.parseInt(SettingsList.getItem(h).split(" ")[1].toString());
+						long a = Settings.get(i);
+						String b = String.valueOf(a);
+					
+					if(SettingsList.getItem(h).toString().split(" ")[3].contentEquals(b)){
+							System.out.println("No Changes in Setting "+i);
+						
+					}else if(!SettingsList.getItem(h).toString().split(" ")[3].contentEquals(b)){
+						
+						
+						SettingsArea.append(myDate.getHours()+ ":"+myDate.getMinutes()+ ":"+myDate.getSeconds()+"   "+SettingsList.getItem(h).toString() + "  ->  "+"Setting "+i+ " : "+a+"\n");
+						SettingsList.delItem(h);
+						SettingsList.add("Setting "+i+ " : "+a, h);
+						
+					}
+					
+				}
+				}
+				}
+				
+				}catch(Exception e){
+					e.printStackTrace();
+				}
+				
+			}
+		});
+		btnNewButton.setBounds(284, 244, 135, 23);
+		panel.add(btnNewButton);
+		
 
+		JButton button_2 = new JButton("Clear Log");
+		button_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				SettingsArea.setText("");
+			}
+		});
+		button_2.setBounds(141, 244, 135, 23);
+		panel.add(button_2);
+		
 		//NPC Pannel
 		Panel NpcPannel = new Panel();
 		tabbedPane.addTab("NPCs", null, NpcPannel, null);
@@ -120,7 +208,7 @@ public class GUI extends JFrame {
 				NpcId = Integer.parseInt(selnpc[0]);
 				Npc a = Npcs.get(NpcId);
 				if (a != null && NpcId > 0) {
-
+					
 					FryslanDebuggerMain.TargetID = a.getLocation();
 					NPCTA.setText("Name : " + a.getName() + "\n" + "ID : "
 							+ a.getId() + "\n" + "Animation : "
@@ -132,7 +220,7 @@ public class GUI extends JFrame {
 							+ a.getMaxHp()
 							+ "\n"
 							+
-							// "HP Percent : "+a.getHpPercent()+"\n"+
+							 "HP Percent : "+a.getHpPercent()+"\n"+
 							"Combat Level : " + a.getLevel() + "\n"
 							+ "Is onScreen : " + a.isOnScreen() + "\n"
 							+ "Location : " + a.getLocation() + "\n"
@@ -246,7 +334,7 @@ public class GUI extends JFrame {
 							+ a.getMaxHp()
 							+ "\n"
 							+
-							// "HP Percent : "+a.getHpPercent()+"\n"+
+							//"HP Percent : "+a.getHpPercent()+"\n"+
 							"Prayer Icon : " + a.getPrayerIcon() + "\n"
 							+ "Skull Icon : " + a.getSkullIcon() + "\n"
 							+ "Is onScreen : " + a.isOnScreen() + "\n"
@@ -292,8 +380,7 @@ public class GUI extends JFrame {
 		});
 		InventoryList.setBounds(10, 10, 156, 246);
 		InventoryPannel.add(InventoryList);
-		
-		
+
 		// Path\Area Creater Pannel
 
 		JPanel panel_3 = new JPanel();
@@ -329,14 +416,14 @@ public class GUI extends JFrame {
 					textArea.append("//This TilePath Is Created Using Fryslan Debugger.\n\nTile[] "
 							+ txtPathName.getText().toString()
 							+ " = new Tile[] { \nnew Tile"
-							+ Players.getLocal().getLocation() + " ,");
+							+ CurrLocation() + " ,");
 
 				} else {
 
 					textArea.append("//This TilePath Is Created Using Fryslan Debugger.\n\nTile[] "
 							+ "HEXArea"
 							+ " = new Tile[] { \nnew Tile"
-							+ Players.getLocal().getLocation() + " ,");
+							+ CurrLocation() + " ,");
 				}
 
 			}
@@ -348,7 +435,7 @@ public class GUI extends JFrame {
 		btnAddTile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				textArea.append("\nnew Tile"
-						+ Players.getLocal().getLocation() + " ,");
+						+ CurrLocation() + " ,");
 			}
 		});
 		btnAddTile.setBounds(320, 79, 89, 23);
@@ -357,7 +444,7 @@ public class GUI extends JFrame {
 		JButton btnEndTile = new JButton("End Tile");
 		btnEndTile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				textArea.append("\nnew Tile" + Players.getLocal().getLocation()
+				textArea.append("\nnew Tile" + CurrLocation()
 						+ " };\n\n");
 			}
 		});
@@ -373,13 +460,13 @@ public class GUI extends JFrame {
 					textArea.append("//This Area Is Created Using Fryslan Debugger.\n\nArea "
 							+ txtAreaName.getText().toString()
 							+ " = new Area(new Tile[] { \nnew Tile"
-							+ Players.getLocal().getLocation() + " ,");
+							+ CurrLocation() + " ,");
 
 				} else {
 					textArea.append("//This Area Is Created Using Fryslan Debugger.\n\nArea "
 							+ "HEXArea"
 							+ " = new Area(new Tile[] { \nnew Tile"
-							+ Players.getLocal().getLocation() + " ,");
+							+ CurrLocation() + " ,");
 				}
 			}
 		});
@@ -390,7 +477,7 @@ public class GUI extends JFrame {
 		button_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				textArea.append("\nnew Tile"
-						+ Players.getLocal().getLocation() + " ,");
+						+ CurrLocation() + " ,");
 			}
 		});
 		button_3.setBounds(320, 211, 89, 23);
@@ -399,7 +486,7 @@ public class GUI extends JFrame {
 		JButton button_4 = new JButton("End Tile");
 		button_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				textArea.append("\nnew Tile" + Players.getLocal().getLocation()
+				textArea.append("\nnew Tile" + CurrLocation()
 						+ " });\n\n");
 			}
 		});
@@ -413,7 +500,7 @@ public class GUI extends JFrame {
 		JLabel lblPathCreater = new JLabel("Path Creator");
 		lblPathCreater.setBounds(320, 10, 89, 14);
 		panel_3.add(lblPathCreater);
-
+		
 		JButton button = new JButton("Load Data");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -421,6 +508,7 @@ public class GUI extends JFrame {
 				GOList.removeAll();
 				GIList.removeAll();
 				PlayerList.removeAll();
+				
 
 				Npc[] allNPC = Npcs.getLoaded();
 				if (CKNPC.isSelected() == true) {
@@ -576,5 +664,10 @@ public class GUI extends JFrame {
 				InventoryList.removeAll();
 			}
 		});
+	}
+	
+	public static String CurrLocation(){
+		return "("+Players.getLocal().getLocation().getX()+" ,"+Players.getLocal().getLocation().getY()+" ,"+Game.getPlane()+")";
+		
 	}
 }

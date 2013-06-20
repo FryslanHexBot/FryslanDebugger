@@ -1,28 +1,21 @@
 package FryslanDebugger;
 
-import java.applet.Applet;
 import java.awt.EventQueue;
 import java.awt.Graphics;
-import java.net.MalformedURLException;
-import java.net.URL;
-
 import org.hexbot.api.listeners.Paintable;
 import org.hexbot.api.methods.Players;
 import org.hexbot.api.wrapper.Tile;
 import org.hexbot.script.Manifest;
 import org.hexbot.script.Script;
-import org.hexbot.bot.Bot;
-import org.hexbot.bot.event.debug.GameDebug;
 
-@Manifest(author = "Fryslan", name = "Fryslan Debugger", description = "Ultimate Dev Tool", version = 1.2)
+@Manifest(author = "Fryslan", name = "Fryslan Debugger", description = "Ultimate Dev Tool", version = 1.3)
 public class FryslanDebuggerMain extends Script implements Paintable {
 	
 	public static Tile TargetID;
 
 	@Override
 	public int loop() {
-		
-	
+
 		return 0;
 	}
 
@@ -40,7 +33,7 @@ public class FryslanDebuggerMain extends Script implements Paintable {
 					GUI frame = new GUI();
 					frame.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					e.printStackTrace(); 
 				}
 			}
 		});
@@ -52,11 +45,9 @@ public class FryslanDebuggerMain extends Script implements Paintable {
 		
 		Tile myTile = TargetID; 
 		if(myTile != null){
-		g.fillPolygon(myTile.getBounds().xpoints,myTile.getBounds().ypoints,myTile.getBounds().npoints);
+		myTile.draw(g);
 		g.drawLine(Players.getLocal().getLocation().getScreenLocation().x, Players.getLocal().getLocation().getScreenLocation().y, TargetID.getScreenLocation().x,TargetID.getScreenLocation().y);
-	}
-		
-		
+		}
 	}
 		
 }
